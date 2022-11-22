@@ -7,11 +7,9 @@
     </head>
 
     <body>
-        <?php
-            $connection = mysqli_connect("mysql.itn.liu.se", "lego", "", "lego");
-        ?>
-
-        <!-- Form där man skriver in sökord som tar en till searchResult.php?searchTerm="sökord" -->
+        <form action="searchResult.php" method="get">
+            <input type="text" name="searchTerm">
+        </form>
     </body>
 
     <?php include("footer.php"); ?>

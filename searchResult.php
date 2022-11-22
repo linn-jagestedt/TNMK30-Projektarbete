@@ -9,11 +9,37 @@
         return $input;
     }
 
-    function DisplayItem(array $color_row, array $inventory_row, array $image_row) {
+    function DisplayItem(string $partName, array $images) {
         // Kod som använder datan i de olika tabellerna för att returnerar en 
         // sträng av html.
-
         return "";
+    }
+    
+    function GetItemData($connection) 
+    {
+        // Hämta alla bitar vars namn matchar $_GET['searchTerm'];
+        $part_result = mysqli_query($connection, "");
+
+        // $imagesByPartName['partName'] = ...
+        $imagesByPartName = null;
+
+        while ($part_row = mysqli_fetch_array($part_result)) 
+        {
+            // Sök i inventory efter alla bitar med samma ItemID och distinkta färger
+            $inventory_result = mysqli_query($connection, "");
+
+            while ($inventory_row = mysqli_fetch_array($inventory_result)) 
+            {
+                //Sök i de nya tabellerna med info från inventory_row
+                $color_result = mysqli_query($connection, "");
+                $color_row = mysqli_fetch_array($color_result);
+
+                $image_result = mysqli_query($connection, "");
+                $image_row = mysqli_fetch_array($image_result);      
+            }
+        }
+
+        return $imagesByPartName;
     }
 ?>
 
@@ -28,24 +54,15 @@
 
         <div class="result-list">
             <?php
-                // Kod som skapar en connection till databasen
+                $connection = null;
 
-                //Hämta alla bitar som matchar $_GET['searchTerm'];
-                $inventory_result = mysqli_query($connection, "");
+                $imagesByPartName = GetItemData($connection);
 
-                while ($inventory_row = mysqli_fetch_array($inventory_result)) 
+                foreach ($imagesByPartName as $partName => $images) 
                 {
-                    //Sök i de nya tabbellerna med ItemID från inventory_row
-                    $color_result = mysqli_query($connection, "");
-                    $image_result = mysqli_query($connection, "");
-
-                    //Hämta första raden från sökningen
-                    $color_row = mysqli_fetch_array($color_result);
-                    $image_row = mysqli_fetch_array($image_result);
-
-                    //Skriv ut html
-                    print(DisplayItem($inventory_row, $color_row, $image_row));
+                    DisplayItem($partName, $images);
                 }
+                
             ?>
         </div>
 

@@ -2,6 +2,8 @@
     <div class="Logo">
     </div>
     <div class="searchBox">
-        <!-- Form där man skriver in sökord som tar en till searchResult.php?searchTerm="sökord" -->
+        <form action="searchResult.php" method="get">
+            <input type="text" name="searchTerm">
+        </form>
     </div>
 </header>

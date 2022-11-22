@@ -7,6 +7,10 @@
     </head>
 
     <body>
+        <?php
+            $connection = mysqli_connect("mysql.itn.liu.se", "lego", "", "lego");
+        ?>
+
         <!-- Form där man skriver in sökord som tar en till searchResult.php?searchTerm="sökord" -->
     </body>
 

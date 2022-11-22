@@ -31,13 +31,13 @@
                 // Kod som skapar en connection till databasen
 
                 //Hämta alla bitar som matchar $_GET['searchTerm'];
-                $inventory_result =  mysqli_query($connection, "");
+                $inventory_result = mysqli_query($connection, "");
 
-                while ($inventory_row == mysqli_fetch_array($inventory_result)) 
+                while ($inventory_row = mysqli_fetch_array($inventory_result)) 
                 {
                     //Sök i de nya tabbellerna med ItemID från inventory_row
-                    $color_result = mysqli_query($connection, "");;
-                    $image_result = mysqli_query($connection, "");;
+                    $color_result = mysqli_query($connection, "");
+                    $image_result = mysqli_query($connection, "");
 
                     //Hämta första raden från sökningen
                     $color_row = mysqli_fetch_array($color_result);

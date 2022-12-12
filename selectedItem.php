@@ -54,6 +54,8 @@
     <head>
         <title>Legobasen</title>
         <meta charset="utf-8">
+        <link href="style.css" media="screen" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
     </head>
 
     <body>
@@ -73,6 +75,65 @@
             ?>
         </div>
 
+        <div class="item_flex_container">
+            <div class="big_image_2">
+                <img src="images/we52mkpw.jpg" alt="Legobit">
+            </div>
+            <div class="brick_text">
+                <h3>Brick title</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <div class="colours">
+                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
+                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
+                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
+                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
+                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
+                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
+                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
+                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
+                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
+                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
+                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
+                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
+                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
+                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
+                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
+                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
+                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
+                </div>
+            </div>
+        </div>
+        <div class="line"></div>
+        <div class="sets_container">
+            <div class="set">
+                <img class="set_image" src="images/40522_alt1.png" alt="Legoset">
+                <div class="set_text">
+                    <h3>Set name</h3>
+                    <p>Release year: xxxx</p><p>Part quantity: X<p>
+                </div>
+            </div>
+            <div class="set">
+                <img class="set_image" src="images/40522_alt1.png" alt="Legoset">
+                <div class="set_text">
+                    <h3>Set name</h3>
+                    <p>Release year: xxxx</p><p>Part quantity: X<p>
+                </div>
+            </div>
+            <div class="set">
+                <img class="set_image" src="images/40522_alt1.png" alt="Legoset">
+                <div class="set_text">
+                    <h3>Set name</h3>
+                    <p>Release year: xxxx</p><p>Part quantity: X<p>
+                </div>
+            </div>
+            <div class="set">
+                <img class="set_image" src="images/40522_alt1.png" alt="Legoset">
+                <div class="set_text">
+                    <h3>Set name</h3>
+                    <p>Release year: xxxx</p><p>Part quantity: X<p>
+                </div>
+            </div>
+        </div>
         <?php include("footer.php"); ?>
     </body>
 </html>

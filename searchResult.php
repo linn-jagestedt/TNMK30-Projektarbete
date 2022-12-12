@@ -1,71 +1,279 @@
 <!DOCTYPE html>
 
-<?php 
-    function SanitizeInput(string $input) {
-        //Kod som tar bort mellanslag i början och slut
-
-        //Kod som skyddar mot databas attacker
-
-        return $input;
-    }
-
-    function DisplayItem(string $partName, array $images) {
-        // Kod som använder datan i de olika tabellerna för att returnerar en 
-        // sträng av html.
-        return "";
-    }
-    
-    function GetItemData($connection) 
-    {
-        // Hämta alla bitar vars namn matchar $_GET['searchTerm'];
-        $part_result = mysqli_query($connection, "");
-
-        // $imagesByPartName['partName'] = ...
-        $imagesByPartName = null;
-
-        while ($part_row = mysqli_fetch_array($part_result)) 
-        {
-            // Sök i inventory efter alla bitar med samma ItemID och distinkta färger
-            $inventory_result = mysqli_query($connection, "");
-
-            while ($inventory_row = mysqli_fetch_array($inventory_result)) 
-            {
-                //Sök i de nya tabellerna med info från inventory_row
-                $color_result = mysqli_query($connection, "");
-                $color_row = mysqli_fetch_array($color_result);
-
-                $image_result = mysqli_query($connection, "");
-                $image_row = mysqli_fetch_array($image_result);      
-            }
-        }
-
-        return $imagesByPartName;
-    }
-?>
-
-<html>   
+<html lang='sv'>   
     <head>
         <title>Legobasen</title>
         <meta charset="utf-8">
+        <link href="style.css" media="screen" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
     </head>
 
     <body>
-        <?php include("header.php"); ?>
+        <main class="result_main">
+            <?php include("header.php"); ?>
+            <div class="navigator_container">
+                <div class="flex-container">
+                    <div class="flex-item filter">
+                        <div class="restrainer">
+                            <titel>Filter</titel>
+                            <form action="/action_page.php">
+                                <label for="färg">Colour:</label>
+                                <select id="färg" name="färg">
+                                    <option value="röd" selected>red</option>
+                                    <option value="blå">blue</option>
+                                    <option value="gul">yellow</option>
+                                    <option value="grön">green</option>
+                                </select>
+                                <input type="submit">
+                            </form>
+                        </div>
+                    </div>
 
-        <div class="result-list">
-            <?php
-                $connection = null;
+                    <div class="flex-item results case">
+                        <div class="items">
+                            <div class="item">
+                                <div class="image-wrapper">
+                                    <a href="http://www.student.itn.liu.se/~noero172/tnmk30/TNMK30-Projektarbete-main/selectedItem.php">
+                                    <img class="big_image" src="images/we52mkpw.jpg" alt="Legobit">
+                                    </a>
+                                </div>
+                                <div calss="titlescroll">
+                                    <span class="brick_title">
+                                        <a href="http://www.student.itn.liu.se/~noero172/tnmk30/TNMK30-Projektarbete-main/selectedItem.php">Brick title</a>
+                                    </span>
+                                    <div class="scroll">
+                                        <div class="scroll-button">&#9664</div>
+                                        <div class="colour-image">
+                                            <img src="images/we52mkpw.jpg" alt="Legobit">
+                                        </div>
+                                        <div class="colour-image">
+                                            <img src="images/we52mkpw.jpg" alt="Legobit">
+                                        </div>
+                                        <div class="colour-image">
+                                            <img src="images/we52mkpw.jpg" alt="Legobit">
+                                        </div>
+                                        <div class="scroll-button">&#9654</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="item">
+                                <div class="image-wrapper">
+                                    <a href="http://www.student.itn.liu.se/~noero172/tnmk30/TNMK30-Projektarbete-main/selectedItem.php">
+                                    <img class="big_image" src="images/we52mkpw.jpg" alt="Legobit">
+                                    </a>
+                                </div>
+                                <div calss="titlescroll">
+                                    <span class="brick_title">
+                                        <a href="http://www.student.itn.liu.se/~noero172/tnmk30/TNMK30-Projektarbete-main/selectedItem.php">Brick title</a>
+                                    </span>
+                                    <div class="scroll">
+                                        <div class="scroll-button">&#9664</div>
+                                        <div class="colour-image">
+                                            <img src="images/we52mkpw.jpg" alt="Legobit">
+                                        </div>
+                                        <div class="colour-image">
+                                            <img src="images/we52mkpw.jpg" alt="Legobit">
+                                        </div>
+                                        <div class="colour-image">
+                                            <img src="images/we52mkpw.jpg" alt="Legobit">
+                                        </div>
+                                        <div class="scroll-button">&#9654</div>
+                                    </div>
+                                </div>
+                            </div>
 
-                $imagesByPartName = GetItemData($connection);
+                            <div class="item">
+                                <div class="image-wrapper">
+                                    <a href="http://www.student.itn.liu.se/~noero172/tnmk30/TNMK30-Projektarbete-main/selectedItem.php">
+                                    <img class="big_image" src="images/we52mkpw.jpg" alt="Legobit">
+                                    </a>
+                                </div>
+                                <div calss="titlescroll">
+                                    <span class="brick_title">
+                                        <a href="http://www.student.itn.liu.se/~noero172/tnmk30/TNMK30-Projektarbete-main/selectedItem.php">Brick title</a>
+                                    </span>
+                                    <div class="scroll">
+                                        <div class="scroll-button">&#9664</div>
+                                        <div class="colour-image">
+                                            <img src="images/we52mkpw.jpg" alt="Legobit">
+                                        </div>
+                                        <div class="colour-image">
+                                            <img src="images/we52mkpw.jpg" alt="Legobit">
+                                        </div>
+                                        <div class="colour-image">
+                                            <img src="images/we52mkpw.jpg" alt="Legobit">
+                                        </div>
+                                        <div class="scroll-button">&#9654</div>
+                                    </div>
+                                </div>
+                            </div>
 
-                foreach ($imagesByPartName as $partName => $images) 
-                {
-                    DisplayItem($partName, $images);
-                }
-                
-            ?>
-        </div>
+                            <div class="item">
+                                <div class="image-wrapper">
+                                    <a href="http://www.student.itn.liu.se/~noero172/tnmk30/TNMK30-Projektarbete-main/selectedItem.php">
+                                    <img class="big_image" src="images/we52mkpw.jpg" alt="Legobit">
+                                    </a>
+                                </div>
+                                <div calss="titlescroll">
+                                    <span class="brick_title">
+                                        <a href="http://www.student.itn.liu.se/~noero172/tnmk30/TNMK30-Projektarbete-main/selectedItem.php">Brick title</a>
+                                    </span>
+                                    <div class="scroll">
+                                        <div class="scroll-button">&#9664</div>
+                                        <div class="colour-image">
+                                            <img src="images/we52mkpw.jpg" alt="Legobit">
+                                        </div>
+                                        <div class="colour-image">
+                                            <img src="images/we52mkpw.jpg" alt="Legobit">
+                                        </div>
+                                        <div class="colour-image">
+                                            <img src="images/we52mkpw.jpg" alt="Legobit">
+                                        </div>
+                                        <div class="scroll-button">&#9654</div>
+                                    </div>
+                                </div>
+                            </div>
 
-        <?php include("footer.php"); ?>
+                            <div class="item">
+                                <div class="image-wrapper">
+                                    <a href="http://www.student.itn.liu.se/~noero172/tnmk30/TNMK30-Projektarbete-main/selectedItem.php">
+                                    <img class="big_image" src="images/we52mkpw.jpg" alt="Legobit">
+                                    </a>
+                                </div>
+                                <div calss="titlescroll">
+                                    <span class="brick_title">
+                                        <a href="http://www.student.itn.liu.se/~noero172/tnmk30/TNMK30-Projektarbete-main/selectedItem.php">Brick title</a>
+                                    </span>
+                                    <div class="scroll">
+                                        <div class="scroll-button">&#9664</div>
+                                        <div class="colour-image">
+                                            <img src="images/we52mkpw.jpg" alt="Legobit">
+                                        </div>
+                                        <div class="colour-image">
+                                            <img src="images/we52mkpw.jpg" alt="Legobit">
+                                        </div>
+                                        <div class="colour-image">
+                                            <img src="images/we52mkpw.jpg" alt="Legobit">
+                                        </div>
+                                        <div class="scroll-button">&#9654</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <div class="image-wrapper">
+                                    <a href="http://www.student.itn.liu.se/~noero172/tnmk30/TNMK30-Projektarbete-main/selectedItem.php">
+                                    <img class="big_image" src="images/we52mkpw.jpg" alt="Legobit">
+                                    </a>
+                                </div>
+                                <div calss="titlescroll">
+                                    <span class="brick_title">
+                                        <a href="http://www.student.itn.liu.se/~noero172/tnmk30/TNMK30-Projektarbete-main/selectedItem.php">Brick title</a>
+                                    </span>
+                                    <div class="scroll">
+                                        <div class="scroll-button">&#9664</div>
+                                        <div class="colour-image">
+                                            <img src="images/we52mkpw.jpg" alt="Legobit">
+                                        </div>
+                                        <div class="colour-image">
+                                            <img src="images/we52mkpw.jpg" alt="Legobit">
+                                        </div>
+                                        <div class="colour-image">
+                                            <img src="images/we52mkpw.jpg" alt="Legobit">
+                                        </div>
+                                        <div class="scroll-button">&#9654</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <div class="image-wrapper">
+                                    <a href="http://www.student.itn.liu.se/~noero172/tnmk30/TNMK30-Projektarbete-main/selectedItem.php">
+                                    <img class="big_image" src="images/we52mkpw.jpg" alt="Legobit">
+                                    </a>
+                                </div>
+                                <div calss="titlescroll">
+                                    <span class="brick_title">
+                                        <a href="http://www.student.itn.liu.se/~noero172/tnmk30/TNMK30-Projektarbete-main/selectedItem.php">Brick title</a>
+                                    </span>
+                                    <div class="scroll">
+                                        <div class="scroll-button">&#9664</div>
+                                        <div class="colour-image">
+                                            <img src="images/we52mkpw.jpg" alt="Legobit">
+                                        </div>
+                                        <div class="colour-image">
+                                            <img src="images/we52mkpw.jpg" alt="Legobit">
+                                        </div>
+                                        <div class="colour-image">
+                                            <img src="images/we52mkpw.jpg" alt="Legobit">
+                                        </div>
+                                        <div class="scroll-button">&#9654</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <div class="image-wrapper">
+                                    <a href="http://www.student.itn.liu.se/~noero172/tnmk30/TNMK30-Projektarbete-main/selectedItem.php">
+                                    <img class="big_image" src="images/we52mkpw.jpg" alt="Legobit">
+                                    </a>
+                                </div>
+                                <div calss="titlescroll">
+                                    <span class="brick_title">
+                                        <a href="http://www.student.itn.liu.se/~noero172/tnmk30/TNMK30-Projektarbete-main/selectedItem.php">Brick title</a>
+                                    </span>
+                                    <div class="scroll">
+                                        <div class="scroll-button">&#9664</div>
+                                        <div class="colour-image">
+                                            <img src="images/we52mkpw.jpg" alt="Legobit">
+                                        </div>
+                                        <div class="colour-image">
+                                            <img src="images/we52mkpw.jpg" alt="Legobit">
+                                        </div>
+                                        <div class="colour-image">
+                                            <img src="images/we52mkpw.jpg" alt="Legobit">
+                                        </div>
+                                        <div class="scroll-button">&#9654</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <div class="image-wrapper">
+                                    <a href="http://www.student.itn.liu.se/~noero172/tnmk30/TNMK30-Projektarbete-main/selectedItem.php">
+                                    <img class="big_image" src="images/we52mkpw.jpg" alt="Legobit">
+                                    </a>
+                                </div>
+                                <div calss="titlescroll">
+                                    <span class="brick_title">
+                                        <a href="http://www.student.itn.liu.se/~noero172/tnmk30/TNMK30-Projektarbete-main/selectedItem.php">Brick title</a>
+                                    </span>
+                                    <div class="scroll">
+                                        <div class="scroll-button">&#9664</div>
+                                        <div class="colour-image">
+                                            <img src="images/we52mkpw.jpg" alt="Legobit">
+                                        </div>
+                                        <div class="colour-image">
+                                            <img src="images/we52mkpw.jpg" alt="Legobit">
+                                        </div>
+                                        <div class="colour-image">
+                                            <img src="images/we52mkpw.jpg" alt="Legobit">
+                                        </div>
+                                        <div class="scroll-button">&#9654</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="navigator">
+                    <span class="previous_page">Previous page</span>
+                    <span class="next_page">Next page</span>
+                </div>
+            </div>
+            <?php include("footer.php"); ?>
+        </main>
     </body>
 </html>

@@ -4,7 +4,7 @@
     <head>
         <title>Legobase</title>
         <meta charset="utf-8">
-        <link href="style.css" media="screen" rel="stylesheet" type="text/css">
+        <link href="./css/style.css" media="screen" rel="stylesheet" type="text/css">
         <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
     </head>
 
@@ -18,7 +18,6 @@
                 <form action="searchResult.php" method="get">
                     <label calss='sok-text'><p>Search</p></label>
                     <input type="text" name="searchTerm" class='sok' placeholder=" Find a brick...">
-
                 </form>
             </div>
             <div class="push"></div>

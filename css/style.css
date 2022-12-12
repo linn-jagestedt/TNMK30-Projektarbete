@@ -147,11 +147,11 @@ label p{
     padding: 1vw;
     margin: 1vw;
     width: 15vw;
-    height: 22vw;
+    /*height: 22vw;*/
     align-items: center;
 }
 .items > .item .big_image {
-    max-width: 100%;
+    width: 100%;
     border-style: solid;
     border-color: gray;
     border-width: 2px;
@@ -164,9 +164,9 @@ label p{
 
 .image-wrapper {
     width: 15vw;
-    height: 15vw;
-    display: flex;
-    flex-grow: 4;
+    /*height: 15vw;*/
+    /*display: flex;
+    flex-grow: 4;*/
     margin: 0;
 }
 .titlescroll {
@@ -177,6 +177,14 @@ label p{
     color: #252525;
 }
 
+.page-nav span {
+    font-size: 2vw;
+}
+
+.page-nav a {
+    font-size: 2vw;
+}
+
 .scroll {
     display: flex;
     flex-direction: row;
@@ -185,6 +193,16 @@ label p{
 }
 .scroll-button {
     display: flex;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.scroll-button:hover {
+    cursor: pointer;
 }
 
 .colour-image {
@@ -196,6 +214,11 @@ label p{
     max-width: 3vw;
     padding-left: 0.4vw;
     padding-right: 0.4vw;
+    display: none;
+}
+
+.carousel {
+    display: inline !important;
 }
 
 .scroll-button {

@@ -126,6 +126,7 @@
         <title>Legobasen</title>
         <meta charset="utf-8">
         <link href="./css/style.css" media="screen" rel="stylesheet" type="text/css">
+        <link href="./css/style_result.css" media="screen" rel="stylesheet" type="text/css">
         <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
         <script src="./js/searchResult.js" defer></script>

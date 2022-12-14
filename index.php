@@ -5,6 +5,7 @@
         <title>Legobase</title>
         <meta charset="utf-8">
         <link href="./css/style.css" media="screen" rel="stylesheet" type="text/css">
+        <link href="./css/style_index.css" media="screen" rel="stylesheet" type="text/css">
         <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
     </head>
 

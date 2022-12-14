@@ -55,6 +55,7 @@
         <title>Legobasen</title>
         <meta charset="utf-8">
         <link href="style.css" media="screen" rel="stylesheet" type="text/css">
+        <link href="./css/style_item.css" media="screen" rel="stylesheet" type="text/css">
         <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
     </head>
 

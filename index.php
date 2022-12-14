@@ -7,12 +7,14 @@
         <link href="./css/style.css" media="screen" rel="stylesheet" type="text/css">
         <link href="./css/style_index.css" media="screen" rel="stylesheet" type="text/css">
         <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
+        <link rel="preload" href="./images/lego2.png" as="image" type="image/png"/>
+        <link rel="preload" href="./images/lego2-vertical.png" as="image" type="image/png"/>
     </head>
 
     <body>
         <main class="index_main">
             <div class='bakgrund'>
-                <img src='./images/lego2.png' alt="lego">
+
             </div>
             <div><h1 class='titel'>Legobase</h1></div>
             <div class='sokfalt'>

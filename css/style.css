@@ -71,7 +71,7 @@ header a:active {
     color: white;
     text-decoration: none;
 }
-.logo{
+.logo {
     display: flex;
     background-color: #DA291C;
     color: white;
@@ -93,6 +93,20 @@ label p{
     color: #252525;
 }
 
+.page-nav {
+    margin: auto;
+}
 
+.page-nav a {
+    font-size: 2vw;
+    text-decoration: none;
+}
 
+a:hover {
+    opacity: 0.7;
+}
 
+.page-nav span {
+    font-size: 2vw;
+    margin: 0 2vw;
+}

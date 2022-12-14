@@ -67,5 +67,18 @@ header a:active {
     margin-left: 2vw;
 }
 
+label{
+    display: inline-block;
+    text-align: center;
+    color: #252525;
+}
+label p{
+    color: #252525;
+}
+label{
+    font-size: 1.5vw;
+    margin-right: 1vw;
+}
+
 
 

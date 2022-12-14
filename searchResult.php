@@ -41,7 +41,7 @@
 
             echo("<span class='brick_title'>\n");
 
-                echo("<a>" . $partName . "</a>\n");
+                echo("<p>" . $partName . "</p>\n");
                     
             echo("</span>\n");
 

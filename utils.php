@@ -15,19 +15,19 @@
     {
         echo("<div class='page-nav'>");
 
-        if ($page > 1) {
-            echo("<a href='" . $url . "&page=" . (int)($page - 1)  . "'>&#9664</a>");
-        }
+            if ($page > 1) {
+                echo("<a class='scroll-button' href='" . $url . "&page=" . (int)($page - 1)  . "'>&#9664</a>");
+            }
 
-        echo("<span> page " . $page . " of " . ceil($totalItems / $itemsPerPage) . "</span>");
+            echo("<span> page " . $page . " of " . ceil($totalItems / $itemsPerPage) . "</span>");
 
-        if ($page < ceil($totalItems / $itemsPerPage)) {
-            if ((int)($page * $itemsPerPage) != $totalItems) {
-                echo("<a href='" . $url . "&page=" . (int)($page + 1)  . "'>&#9654</a>");
-            } 
-        }
+            if ($page < ceil($totalItems / $itemsPerPage)) {
+                if ((int)($page * $itemsPerPage) != $totalItems) {
+                    echo("<a class='scroll-button' href='" . $url . "&page=" . (int)($page + 1)  . "'>&#9654</a>");
+                } 
+            }
 
-        echo("</div'>");
+        echo("</div>");
     }
 
     function getItemTypeID(mysqli $connection, string $searchTerm)
@@ -122,7 +122,7 @@
         }
 
         // Ingen bild
-        return "./images/no_img.jpg";
+        return "./images/no_image.png";
     }
 
     function partIDToCSSClass($string) 

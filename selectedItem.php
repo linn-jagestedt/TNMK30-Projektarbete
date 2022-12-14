@@ -142,7 +142,6 @@
 
         while (($lastPos = strpos($html_text, "<p>", $lastPos)) !== false) 
         {   
-
             $text = substr($html_text, $lastPos);            
             $text = substr($text, 0, strpos($text, "</p>"));
             $lastPos = $lastPos + strlen("<p>");
@@ -152,9 +151,8 @@
                 $text = preg_replace("/<a\s(.+?)>(.+?)<\/a>/is", "$2", $text);
                 // ta bort super-text
                 $text = preg_replace("/<sup\s(.+?)>(.+?)<\/sup>/is", "", $text);
-                return $text;
+                return str_replace("<p>", "", $text);
             }
-
         }
 
         return "No description found";

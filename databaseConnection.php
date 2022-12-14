@@ -5,7 +5,9 @@
         die('MySQL connection error');
     }
 
-    function SanitizeInput($connection, string $input) {
-        return mysqli_real_escape_string($connection, $input);
+    function SanitizeInput($connection, string $input) 
+    {
+        $input = mysqli_real_escape_string($connection, $input);
+        return trim($input);
     }
 ?>

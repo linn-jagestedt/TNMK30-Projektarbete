@@ -1,140 +1,216 @@
-<!DOCTYPE html>
 <?php
+    include_once("databaseConnection.php");
+    include_once('utils.php');
 
-    function DisplayItem($connection) 
+    function renderSet(string $setname, string $quantity, string $category, string $year, string $image) 
     {
-        // Hämta biten vars namn matchar $_GET['searchTerm'];
-        $part_result = mysqli_query($connection, "");
-        $part_row = mysqli_fetch_array($part_result);
-        
-        // Sök i inventory efter alla bitar med samma ItemID och distinkta färger
-        $inventory_result = mysqli_query($connection, "");
-        
-        $images = null;
+        echo("<div class='set'>\n");
 
-        while ($inventory_row = mysqli_fetch_array($inventory_result)) 
+            echo("<img class='set_image'" . " src='" . $image .  "' alt='lego-set'>\n");
+
+            echo("<div class='set_text'>");
+
+                echo("<h3>" . $setname . " (" . $category . ")</h3>\n");
+                echo("<p><b>Release Date: </b>" . $year . "</p>\n");
+                echo("<p><b>Quantity: </b>" . $quantity . "</p>\n");
+
+            echo("</div>\n");
+
+        echo("</div>\n");
+    }
+
+    function renderSets($connection, $inventoryResult) 
+    {    
+        while ($inventory_row = mysqli_fetch_array($inventoryResult)) 
         {
-            //Sök i de nya tabellerna med info från inventory_row
-            $color_result = mysqli_query($connection, "");
-            $color_row = mysqli_fetch_array($color_result);
+            $quantity = $inventory_row['Quantity'];            
+            $setID = $inventory_row['SetID'];
 
-            $image_result = mysqli_query($connection, "");
-            $image_row = mysqli_fetch_array($image_result); 
-            
-            //lagra bilder i images
-            $images = null;
+            $set_query = "SELECT * FROM sets WHERE SetID = '" . $setID . "'";
+            $set_result = mysqli_query($connection, $set_query);
+            $set_row = mysqli_fetch_array($set_result);
+
+            $year = $set_row['Year'];
+            $setname = $set_row['Setname'];
+
+            $category = getCategory($connection, $set_row['CatID']);
+
+            renderSet($setname, $quantity, $category, $year, getImage($connection, "", $setID, "S"));
         }
+    }
+
+    function renderSetSection($connection) 
+    {
+        if (isset($_SESSION['PartID'])) {
+            $partID = SanitizeInput($connection, $_SESSION['PartID']);
+        } else {
+            return;
+        }
+
+        if (isset($_SESSION['ColorID'])) {
+            $colorID = SanitizeInput($connection, $_SESSION['ColorID']);
+        } else {
+            return;
+        }
+
+        $page = SanitizeInput($connection, $_SESSION['page']);
+        $itemsPerPage = SanitizeInput($connection, $_SESSION['itemsPerPage']);
+
+        $totalItems = getTotalSets($connection, $partID, $colorID);
+
+        renderPageNav("selectedItem.php?PartID=" . $partID . "&ColorID=" . $colorID . "&itemsPerPage=" . $itemsPerPage, $page, $totalItems, $itemsPerPage);
+        $startIndex = getStartIndex($totalItems, $page, $itemsPerPage);
+
+        // Hämta sets vars itemID matchar input_partID och colorID matchar input_colorID;
+        $inventoryQuery = "SELECT SetID, Quantity FROM inventory WHERE ItemID = '" . $partID . "' AND ColorID = '" . $colorID . "' ORDER BY Quantity DESC LIMIT " . $startIndex . ", " . $itemsPerPage;
+        $inventoryResult = mysqli_query($connection, $inventoryQuery);
+
+        renderSets($connection, $inventoryResult);
+
+        renderPageNav("selectedItem.php?PartID=" . $partID . "&ColorID=" . $colorID . "&itemsPerPage=" . $itemsPerPage, $page, $totalItems, $itemsPerPage);
+    }
+
+    function renderItem($connection) 
+    {
+        if (isset($_SESSION['PartID'])) {
+            $partID = SanitizeInput($connection, $_SESSION['PartID']);
+        } else {
+            echo("<p>No PartID given</p>");
+            return;
+        }
+
+        if (isset($_SESSION['ColorID'])) {
+            $colorID = SanitizeInput($connection, $_SESSION['ColorID']);
+        } else {
+            echo("<p>No ColorID given</p>");
+            return;
+        }
+
+        $partname = getPartname($connection, $partID);
+        $itemtypeID = getItemTypeID($connection, $partID);
+        $colorname = getColor($connection, $colorID);
+
+        $colors_query = "SELECT DISTINCT ColorID FROM inventory WHERE ItemID = '" . $partID . "' ORDER BY ColorID ASC";
+        $colors_result = mysqli_query($connection, $colors_query);
         
-        //returnera html
+        $images = array();
+        
+        if ($colors_result->num_rows > 0) 
+        {
+            while ($colorID_row = mysqli_fetch_array($colors_result)) {
+                $temp_colorID = $colorID_row['ColorID'];
+                array_push($images, [ 'colorID' => $temp_colorID, 'link' => getImage($connection, $temp_colorID, $partID, $itemtypeID) ]);
+            }
+        }
+        else 
+        {  
+            array_push($images,  [ 'colorID' => '', 'link' => getImage($connection, '%', $partID, '%') ]);
+        } 
+
+        $image_link = getLinkByColorID($images, $colorID);
+
+        echo("<div class='big_image_2'>\n");
+            echo("<img id='preview_image' src='" . $image_link . "'> \n");
+        echo("</div>\n");
+
+        echo("<div class='brick_text'>\n");
+
+            echo("<h3>" . $partname . " (" . $colorname . ")</h3>\n");
+
+            echo("<p>" . renderDescription($partID) . "</p>");
+
+            renderImages($images, $partID, $colorID);
+
+        echo("</div>\n");
+    }
+
+    function getLinkByColorID(array $images, string $colorID) {
+        foreach($images as $image) {
+            if ($image['colorID'] === $colorID) {
+                return $image['link'];
+            }
+        }
         return "";
     }
 
-    function DisplaySets($connection)
+    function renderDescription(string $partID)
     {
-        //Hämta alla setid som matchar $_GET['searchTerm'];
-        $set_result = mysqli_query($connection, "");
+        $html_text = file_get_contents('https://brickipedia.fandom.com/wiki/Part_' . $partID);
+        $lastPos = 0;
 
-        while ($set_row = mysqli_fetch_array($set_result)) 
-        {
-            //Sök i de nya tabbellerna med ItemID från set_row
-            $image_result = mysqli_query($connection, "");
+        while (($lastPos = strpos($html_text, "<p>", $lastPos)) !== false) 
+        {   
 
-            //Hämta första raden från sökningen
-            $image_row = mysqli_fetch_array($image_result);
+            $text = substr($html_text, $lastPos);            
+            $text = substr($text, 0, strpos($text, "</p>"));
+            $lastPos = $lastPos + strlen("<p>");
 
-            print(DisplayItem(null, null));
+            if (strpos($text, 'Part ' . $partID)) {
+                // Ta bort a-tag men spara innehåll
+                $text = preg_replace("/<a\s(.+?)>(.+?)<\/a>/is", "$2", $text);
+                // ta bort super-text
+                $text = preg_replace("/<sup\s(.+?)>(.+?)<\/sup>/is", "", $text);
+                return $text;
+            }
+
         }
 
-        //returnera html
-        return "";
+        return "No description found";
+    }
+
+    function renderImages($images, $partID, $colorID) {
+        echo("<div class='colours'>\n");
+
+        foreach ($images as $image) {
+            $image_id = "color_" . $image['colorID'];
+
+            echo("<a href='selectedItem.php?PartID=" . $partID . "&ColorID=" . $image['colorID'] . "' onmouseleave=\"updatePreviewImage('color_" . $colorID . "')\"" . "onmouseover=\"updatePreviewImage('" . $image_id . "')\"" . ">");
+                echo("<img class='single_colour' id=\"". $image_id . "\" src='" . $image['link'] .  "' alt='lego-part'>\n");
+            echo("</a>");   
+        }
+
+        echo("</div>\n");
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') 
+    {
+        if (isset($_GET['PartID'])) { $_SESSION['PartID'] = $_GET['PartID']; }
+        
+        if (isset($_GET['ColorID'])) { $_SESSION['ColorID'] = $_GET['ColorID']; }
+        
+        if (isset($_GET['page'])) { $_SESSION['page'] = $_GET['page']; } 
+        else { $_SESSION['page'] = 1; }
+       
+        if (isset($_GET['itemsPerPage'])) { $_SESSION['itemsPerPage'] = $_GET['itemsPerPage']; } 
+        else { $_SESSION['itemsPerPage'] = 10; }
     }
 ?>
 
+<!DOCTYPE html>
 <html>   
     <head>
-        <title>Legobasen</title>
+        <title>Legobase</title>
         <meta charset="utf-8">
         <link href="./css/style.css" media="screen" rel="stylesheet" type="text/css">
         <link href="./css/style_item.css" media="screen" rel="stylesheet" type="text/css">
         <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script src="./js/selectedItem.js" defer></script> 
     </head>
 
     <body>
         <?php include("header.php"); ?>
 
-        <div>
-            <?php
-                $connection = null;
-                DisplayItem($connection);
-            ?>
-        </div>
-
-        <div class="result-list">
-            <?php
-                $connection = null;
-                DisplaySets($connection);
-            ?>
-        </div>
-
         <div class="item_flex_container">
-            <div class="big_image_2">
-                <img src="images/we52mkpw.jpg" alt="Legobit">
-            </div>
-            <div class="brick_text">
-                <h3>Brick title</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                <div class="colours">
-                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
-                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
-                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
-                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
-                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
-                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
-                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
-                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
-                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
-                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
-                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
-                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
-                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
-                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
-                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
-                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
-                    <img class="single_colour" src="images/we52mkpw.jpg" alt="Legobit">
-                </div>
-            </div>
+            <?php renderItem($connection); ?>
         </div>
+
         <div class="line"></div>
-        <div class="sets_container">
-            <div class="set">
-                <img class="set_image" src="images/40522_alt1.png" alt="Legoset">
-                <div class="set_text">
-                    <h3>Set name</h3>
-                    <p>Release year: xxxx</p><p>Part quantity: X<p>
-                </div>
-            </div>
-            <div class="set">
-                <img class="set_image" src="images/40522_alt1.png" alt="Legoset">
-                <div class="set_text">
-                    <h3>Set name</h3>
-                    <p>Release year: xxxx</p><p>Part quantity: X<p>
-                </div>
-            </div>
-            <div class="set">
-                <img class="set_image" src="images/40522_alt1.png" alt="Legoset">
-                <div class="set_text">
-                    <h3>Set name</h3>
-                    <p>Release year: xxxx</p><p>Part quantity: X<p>
-                </div>
-            </div>
-            <div class="set">
-                <img class="set_image" src="images/40522_alt1.png" alt="Legoset">
-                <div class="set_text">
-                    <h3>Set name</h3>
-                    <p>Release year: xxxx</p><p>Part quantity: X<p>
-                </div>
-            </div>
+
+        <div class='sets_container'>
+            <?php renderSetSection($connection); ?>
         </div>
+
         <?php include("footer.php"); ?>
     </body>
 </html>

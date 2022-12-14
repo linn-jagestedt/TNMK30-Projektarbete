@@ -2,6 +2,29 @@
     include_once("databaseConnection.php");
     include_once("utils.php");
 
+    function renderImage(string $partID, array $images) {
+        echo("<div class='scroll'> \n");
+
+            if (count($images) > 3) {
+                echo("<a class='scroll-button' " . "onclick=\"rotate('" . $partID . "', true)\"" . "> &#9664 </a>\n");
+            }
+
+            echo("<div class='colour-image'>\n");
+
+                foreach ($images as $image) {
+                    $image_id = $partID . "_color_" . $image['colorID'];
+                    echo("<img id=\"". $image_id . "\" src='" . $image['link'] .  "' " . "onclick=\"updatePreviewImage('" . $partID ."', '" . $image_id . "')\"" . "alt='lego-part'>\n");
+                }
+
+            echo("</div>\n");
+
+            if (count($images) > 3) {
+                echo("<a class='scroll-button'" . "onclick=\"rotate('" . $partID . "', false)\"" . "> &#9654 </a>\n");
+            }
+
+        echo("</div>\n");
+    }
+
     function renderItem(string $partName, string $partID, array $images) 
     {
         echo("<div id=\"" . $partID . "\" class='item'>\n");
@@ -24,29 +47,6 @@
 
             renderImage($partID, $images);
         
-        echo("</div>\n");
-    }
-
-    function renderImage(string $partID, array $images) {
-        echo("<div class='scroll'> \n");
-
-            if (count($images) > 3) {
-                echo("<a class='scroll-button' " . "onclick=\"rotate('" . $partID . "', true)\"" . "> &#9664 </a>\n");
-            }
-
-            echo("<div class='colour-image'>\n");
-
-                foreach ($images as $image) {
-                    $image_id = $partID . "_color_" . $image['colorID'];
-                    echo("<img id=\"". $image_id . "\" src='" . $image['link'] .  "' " . "onclick=\"updatePreviewImage('" . $partID ."', '" . $image_id . "')\"" . "alt='lego-part'>\n");
-                }
-
-            echo("</div>\n");
-
-            if (count($images) > 3) {
-                echo("<a class='scroll-button'" . "onclick=\"rotate('" . $partID . "', false)\"" . "> &#9654 </a>\n");
-            }
-
         echo("</div>\n");
     }
 
@@ -88,7 +88,18 @@
 
     function renderPageContent($connection) 
     {
-        $searchTerm = SanitizeInput($connection, $_SESSION['searchTerm']);
+        if (isset($_SESSION['searchTerm'])) {
+            $searchTerm = SanitizeInput($connection, $_SESSION['searchTerm']);
+        } else {
+            echo("<p>No SearchTerm given</p>");
+            return;
+        }
+
+        if ($searchTerm == "") {
+            echo("<p>No SearchTerm given</p>");
+            return;
+        }
+
         $page = SanitizeInput($connection, $_SESSION['page']);
         $itemsPerPage = SanitizeInput($connection, $_SESSION['itemsPerPage']);
 
@@ -120,7 +131,7 @@
 
 <html lang='sv'>   
     <head>
-        <title>Legobasen</title>
+        <title>Legobase</title>
         <meta charset="utf-8">
         <link href="./css/style.css" media="screen" rel="stylesheet" type="text/css">
         <link href="./css/style_result.css" media="screen" rel="stylesheet" type="text/css">

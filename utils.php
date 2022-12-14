@@ -41,9 +41,50 @@
         return $row["ItemTypeID"];
     }
 
+    function getCategory(mysqli $connection, string $catID)
+    {        
+        $result = mysqli_query($connection, "SELECT Categoryname FROM categories WHERE CatID = '" . $catID . "' ");
+        if (!$result) return "";
+        
+        $row = mysqli_fetch_array($result);
+        if (!$row) return "";
+        
+        return $row["Categoryname"];
+    }
+
+    function getPartname($connection, string $partID) 
+    {
+        $result = mysqli_query($connection,  "SELECT * FROM parts WHERE PartID = '" . $partID . "'");
+        if (!$result) return "";
+        
+        $row = mysqli_fetch_array($result);
+        if (!$row) return "";
+
+        return $row['Partname'];
+    }
+
+    function getColor(mysqli $connection, string $colorID)
+    {        
+        $result = mysqli_query($connection, "SELECT Colorname FROM colors WHERE ColorID = '" . $colorID . "' ");
+        if (!$result) return "";
+        
+        $row = mysqli_fetch_array($result);
+        if (!$row) return "";
+        
+        return $row["Colorname"];
+    }
+
     function getTotalParts(mysqli $connection, string $searchTerm) 
     {
         $totalItems_query = "SELECT COUNT(DISTINCT PartID) AS total FROM parts WHERE Partname LIKE '%" . $searchTerm . "%'";
+        $totalItems_result = mysqli_query($connection, $totalItems_query);
+        $totalItems_row = mysqli_fetch_array($totalItems_result);
+        return $totalItems_row['total'];
+    }
+
+    function getTotalSets(mysqli $connection, string $partID, string $colorID) 
+    {
+        $totalItems_query = "SELECT COUNT(DISTINCT SetID) AS total FROM inventory WHERE ItemID = '" . $partID . "' AND ColorID = '" . $colorID . "'";
         $totalItems_result = mysqli_query($connection, $totalItems_query);
         $totalItems_row = mysqli_fetch_array($totalItems_result);
         return $totalItems_row['total'];

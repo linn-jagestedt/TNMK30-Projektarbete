@@ -20,8 +20,7 @@
     flex-wrap: wrap;
 }
 .brick_text h3 {
-    margin-top: 0;
-    margin-bottom: 1vw;
+    margin: 1vw 0;
     font-size: 3vw;
     color: #252525;
 }
@@ -32,11 +31,11 @@
 }
 
 .big_image_2 img {
-    max-width: 100%;
+    width: 100%;
     border-style: solid;
     border-color: gray;
     border-width: 2px;
-    object-fit: contain;
+    margin: auto;
 }
 
 .brick_text .colours {
@@ -67,12 +66,10 @@
     margin: 6vw 15% 4vw 15%;
 }
 
-
 .sets_container {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-
     width: 60%;
     margin: 0 20% 0 20%;
 }
@@ -85,7 +82,7 @@
 .set_image {
     grid-column-start: 1;
     grid-column-end: 1;
-    max-width: 100%;
+    width: 100%;
 }
 .set_text {
     grid-column-start: 2;
@@ -99,4 +96,3 @@
 .set_text p {
     font-size: 1vw;
 }
-

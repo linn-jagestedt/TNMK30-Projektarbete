@@ -54,15 +54,15 @@
 
 /*   Alla individuella träffar   */
 .items > .item {
-    /*background-color: #f1f1f1;*/
     padding: 1vw;
     margin: 1vw;
     width: 15vw;
-    /*height: 22vw;*/
     align-items: center;
 }
 .items > .item .big_image {
-    width: 100%;
+    width: 92%;
+    height: 92%;
+    padding: 4%;
     border-style: solid;
     border-color: gray;
     border-width: 2px;
@@ -75,25 +75,17 @@
 
 .image-wrapper {
     width: 15vw;
-    /*height: 15vw;*/
-    /*display: flex;
-    flex-grow: 4;*/
+    height: 15vw;
     margin: 0;
 }
 .titlescroll {
     display: flex;
     flex-grow: 1;
 }
-.brick_title a {
+.brick_title p {
     color: #252525;
-}
-
-.page-nav span {
-    font-size: 2vw;
-}
-
-.page-nav a {
-    font-size: 2vw;
+    font-size: 30px;
+    margin: 20px;
 }
 
 .scroll {
@@ -103,7 +95,6 @@
     flex-wrap: nowrap;
 }
 .scroll-button {
-    display: flex;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -136,23 +127,7 @@
     color: #D9D9D9;
 }
 
-
-
-
-
-.brick_title a:hover {
-    color: #252525;
-    text-decoration: none;
-}
-.brick_title a:visited {
-    color: #252525;
-    text-decoration: none;
-}
-.brick_title a:link {
-    color: #252525;
-    text-decoration: none;
-}
-.brick_title a:active {
-    color: #252525;
-    text-decoration: none;
+.colour-image img:hover {
+    opacity: 0.7;
+    cursor: pointer;
 }

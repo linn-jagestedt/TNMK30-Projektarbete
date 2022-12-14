@@ -111,3 +111,7 @@ a:hover {
     font-size: 2vw;
     margin: 0 2vw;
 }
+
+.breadcrumb {
+    margin: 20px;
+}

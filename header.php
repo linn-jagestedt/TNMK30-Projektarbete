@@ -6,7 +6,7 @@
         <div class="searchBox">
             <form action="searchResult.php" method="get">
                 <label for="searchBox" class="search_label">Search</label>
-                <input type="text" name="searchTerm">
+                <input type="text" name="searchTerm" value="<?php echo($_SESSION['searchTerm']) ?>">
             </form>
         </div>
     </div>

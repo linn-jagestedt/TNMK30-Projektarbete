@@ -20,6 +20,11 @@ header {
     background-color: #FFD700;
     height: 100%;
 }
+.header_flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 header input {
     border-width: 0px;
     width: 20vw;
@@ -48,6 +53,18 @@ header a:link {
 header a:active {
     color: white;
     text-decoration: none;
+}
+.logo{
+    display: flex;
+    background-color: #DA291C;
+    color: white;
+    font-size: 2.5vw;
+    padding-top: 1vw;
+    padding-bottom: 1vw;
+    padding-left: 1.5vw;
+    padding-right: 1.5vw;
+    margin: 1vw;
+    margin-left: 2vw;
 }
 
 

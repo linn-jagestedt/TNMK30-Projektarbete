@@ -1,5 +1,8 @@
 <?php 
-    function displayItem(string $partName, string $partID, array $images) 
+    include_once("databaseConnection.php");
+    include_once("utils.php");
+
+    function renderItem(string $partName, string $partID, array $images) 
     {
         echo("<div id=\"" . $partID . "\" class='item'>\n");
 
@@ -19,12 +22,12 @@
                     
             echo("</span>\n");
 
-            displayImage($partID, $images);
+            renderImage($partID, $images);
         
         echo("</div>\n");
     }
 
-    function displayImage(string $partID, array $images) {
+    function renderImage(string $partID, array $images) {
         echo("<div class='scroll'> \n");
 
             if (count($images) > 3) {
@@ -47,29 +50,8 @@
         echo("</div>\n");
     }
 
-    function getItemData($connection) 
+    function renderItems($connection, $part_result) 
     {
-        $searchTerm = SanitizeInput($_SESSION['searchTerm']);
-        $page = SanitizeInput($_SESSION['page']);
-        $itemsPerPage = SanitizeInput($_SESSION['itemsPerPage']);
-
-        $totalItems_query = "SELECT COUNT(DISTINCT PartID) AS total FROM parts WHERE Partname LIKE '%" . $searchTerm . "%'";
-        $totalItems_result = mysqli_query($connection, $totalItems_query);
-        $totalItems_row = mysqli_fetch_array($totalItems_result);
-        $totalItems = $totalItems_row['total'];
-
-        $startIndex = getStartIndex($totalItems, $page, $itemsPerPage);
-
-        echo("<div class='page-nav'>");
-
-        getPageButtons("searchResult.php?searchTerm=" . $searchTerm . "&itemsPerPage=" . $itemsPerPage, $page, $totalItems ,$itemsPerPage);
-        
-        echo("</div>");
-
-        // Hämta alla bitar vars namn matchar $input
-        $part_query = "SELECT * FROM parts WHERE Partname LIKE '%" . $searchTerm . "%' ORDER BY LENGTH(Partname), Partname ASC LIMIT " . $startIndex . ", " . $itemsPerPage;
-        $part_result = mysqli_query($connection, $part_query);
-
         echo("<div class='items'>");
 
         // Plocka varje data-rad från $part_results
@@ -79,7 +61,7 @@
             $partID = $part_row['PartID'];
             $partName = $part_row['Partname'];
 
-            $itemtypeID = getSingleValue("ItemtypeID", "inventory", "ItemID", $partID, $connection);
+            $itemtypeID = getItemTypeID($connection, $partID);
 
             // Sök i inventory efter alla bitar med samma ItemID och distinkta färger
             $colors_query = "SELECT DISTINCT ColorID FROM inventory WHERE ItemID = '" . $partID . "' ORDER BY ColorID ASC";
@@ -98,14 +80,29 @@
                 array_push($images,  [ 'colorID' => '', 'link' => getImage($connection, '%', $partID, '%') ]);
             } 
 
-            displayItem($partName, $partID, $images);
+            renderItem($partName, $partID, $images);
         }
 
         echo("</div>");
     }
 
-    include_once("databaseConnection.php");
-    include_once("utils.php");
+    function renderPageContent($connection) 
+    {
+        $searchTerm = SanitizeInput($_SESSION['searchTerm']);
+        $page = SanitizeInput($_SESSION['page']);
+        $itemsPerPage = SanitizeInput($_SESSION['itemsPerPage']);
+
+        $totalItems = getTotalParts($connection, $searchTerm);
+        $startIndex = getStartIndex($totalItems, $page, $itemsPerPage);
+
+        // Hämta alla bitar vars namn matchar $input
+        $part_query = "SELECT * FROM parts WHERE Partname LIKE '%" . $searchTerm . "%' ORDER BY LENGTH(Partname), Partname ASC LIMIT " . $startIndex . ", " . $itemsPerPage;
+        $part_result = mysqli_query($connection, $part_query);
+
+        renderPageNav("searchResult.php?searchTerm=" . $searchTerm . "&itemsPerPage=" . $itemsPerPage, $page, $totalItems, $itemsPerPage);
+        renderItems($connection, $part_result);
+        renderPageNav("searchResult.php?searchTerm=" . $searchTerm . "&itemsPerPage=" . $itemsPerPage, $page, $totalItems, $itemsPerPage);
+    }
 
     if ($_SERVER['REQUEST_METHOD'] === 'GET') 
     {
@@ -154,7 +151,7 @@
                     </div>
 
                     <div class="flex-item results case">
-                        <?php getItemData($connection); ?>
+                        <?php renderPageContent($connection); ?>
                     </div>
                 </div>
             </div>

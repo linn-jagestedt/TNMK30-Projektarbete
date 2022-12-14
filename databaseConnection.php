@@ -1,5 +1,6 @@
 <?php
     $connection = mysqli_connect("mysql.itn.liu.se", "lego", "", "lego");
+
     if (!$connection) {
         die('MySQL connection error');
     }
@@ -16,8 +17,10 @@
         return $startIndex;
     }
 
-    function getPageButtons(string $url, int $page, int $totalItems, int $itemsPerPage) 
+    function renderPageNav(string $url, int $page, int $totalItems, int $itemsPerPage) 
     {
+        echo("<div class='page-nav'>");
+
         if ($page > 1) {
             echo("<a href='" . $url . "&page=" . (int)($page - 1)  . "'>&#9664</a>");
         }
@@ -29,17 +32,27 @@
                 echo("<a href='" . $url . "&page=" . (int)($page + 1)  . "'>&#9654</a>");
             } 
         }
+
+        echo("</div'>");
     }
 
-    function getSingleValue(string $result_column, string $table, string $search_column, string $search_term, mysqli $connection)
+    function getItemTypeID(mysqli $connection, string $searchTerm)
     {        
-        $result = mysqli_query($connection, "SELECT " . $result_column . " FROM " . $table . " WHERE " . $search_column . " = '" . $search_term . "' ");
+        $result = mysqli_query($connection, "SELECT ItemTypeID FROM inventory WHERE ItemID = '" . $searchTerm . "' ");
         if (!$result) return "";
         
         $row = mysqli_fetch_array($result);
         if (!$row) return "";
         
-        return $row[$result_column];
+        return $row["ItemTypeID"];
+    }
+
+    function getTotalParts(mysqli $connection, string $searchTerm) 
+    {
+        $totalItems_query = "SELECT COUNT(DISTINCT PartID) AS total FROM parts WHERE Partname LIKE '%" . $searchTerm . "%'";
+        $totalItems_result = mysqli_query($connection, $totalItems_query);
+        $totalItems_row = mysqli_fetch_array($totalItems_result);
+        return $totalItems_row['total'];
     }
 
     function getImage($connection, string $colorID, string $itemID, string $itemtypeID) {

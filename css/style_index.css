@@ -58,6 +58,10 @@
 
 @media (max-width: 900px) or (orientation: portrait) {
 
+    .index_main {
+        height: 60vh;
+    }
+
     .titel {
         font-size: 11vw;
         margin-top: 30vh;

@@ -88,9 +88,9 @@
 
     function renderPageContent($connection) 
     {
-        $searchTerm = SanitizeInput($_SESSION['searchTerm']);
-        $page = SanitizeInput($_SESSION['page']);
-        $itemsPerPage = SanitizeInput($_SESSION['itemsPerPage']);
+        $searchTerm = SanitizeInput($connection, $_SESSION['searchTerm']);
+        $page = SanitizeInput($connection, $_SESSION['page']);
+        $itemsPerPage = SanitizeInput($connection, $_SESSION['itemsPerPage']);
 
         $totalItems = getTotalParts($connection, $searchTerm);
         $startIndex = getStartIndex($totalItems, $page, $itemsPerPage);

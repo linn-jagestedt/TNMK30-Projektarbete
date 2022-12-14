@@ -1,8 +1,4 @@
 <?php 
-    function SanitizeInput(string $input) {
-        return mysql_real_escape_string($input);
-    }
-
     function getStartIndex(int $total, int $page, int $itemsPerPage) 
     {
         $startIndex = ($page - 1) * $itemsPerPage;

@@ -4,4 +4,8 @@
     if (!$connection) {
         die('MySQL connection error');
     }
+
+    function SanitizeInput($connection, string $input) {
+        return mysqli_real_escape_string($connection, $input);
+    }
 ?>

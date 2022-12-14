@@ -56,7 +56,7 @@
     object-fit: cover;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 900px) or (orientation: portrait) {
 
     .titel {
         font-size: 11vw;
@@ -67,7 +67,6 @@
         padding: 1vw;
         height: auto;
         width: 60vw;
-        
     }
 
     .sokfalt label {

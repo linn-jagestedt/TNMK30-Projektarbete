@@ -1,0 +1,173 @@
+/*
+* Search Result
+*/
+
+.flex-container {
+    display: flex;
+    flex-wrap: nowrap;
+    background-color: white;
+}
+
+.flex-container .flex-item {
+    margin: 2vw;
+    text-align: center;
+    
+    font-size: 3vw;
+    align-items: center;
+}
+
+.filter {
+    flex-grow: 1;
+    background-color: white;
+    width: 1vw;
+}
+
+.results {
+    flex-grow: 3;
+    width: 0;
+}
+
+.restrainer {
+    background-color: #f1f1f1;
+    border-style: solid;
+    border-color: grey;
+    border-width: 2px;
+    margin: 2vw;
+}
+.restrainer titel {
+    color: #252525;
+}
+
+/*   Högra sidan som innehåller alla träffar   */
+.items {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+/*   Alla individuella träffar   */
+.items > .item {
+    /*background-color: #f1f1f1;*/
+    padding: 1vw;
+    margin: 1vw;
+    width: 15vw;
+    /*height: 22vw;*/
+    align-items: center;
+}
+.items > .item .big_image {
+    width: 100%;
+    border-style: solid;
+    border-color: gray;
+    border-width: 2px;
+    object-fit: contain;
+}
+.items > .item span {
+    font-size: 2vw;
+    margin: 0px;
+}
+
+.image-wrapper {
+    width: 15vw;
+    /*height: 15vw;*/
+    /*display: flex;
+    flex-grow: 4;*/
+    margin: 0;
+}
+.titlescroll {
+    display: flex;
+    flex-grow: 1;
+}
+.brick_title a {
+    color: #252525;
+}
+
+.page-nav span {
+    font-size: 2vw;
+}
+
+.page-nav a {
+    font-size: 2vw;
+}
+
+.scroll {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: nowrap;
+}
+.scroll-button {
+    display: flex;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.scroll-button:hover {
+    cursor: pointer;
+}
+
+.colour-image {
+    display: flex;
+}
+
+.colour-image img {
+    object-fit: contain;
+    max-width: 3vw;
+    padding-left: 0.4vw;
+    padding-right: 0.4vw;
+    display: none;
+}
+
+.carousel {
+    display: inline !important;
+}
+
+.scroll-button {
+    color: #D9D9D9;
+}
+
+.header_flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo{
+    display: flex;
+    background-color: #DA291C;
+    color: white;
+    font-size: 2.5vw;
+    padding-top: 1vw;
+    padding-bottom: 1vw;
+    padding-left: 1.5vw;
+    padding-right: 1.5vw;
+    margin: 1vw;
+    margin-left: 2vw;
+}
+
+.brick_title a:hover {
+    color: #252525;
+    text-decoration: none;
+}
+.brick_title a:visited {
+    color: #252525;
+    text-decoration: none;
+}
+.brick_title a:link {
+    color: #252525;
+    text-decoration: none;
+}
+.brick_title a:active {
+    color: #252525;
+    text-decoration: none;
+}

@@ -156,10 +156,6 @@
                         <?php getItemData($connection); ?>
                     </div>
                 </div>
-                <div class="navigator">
-                    <span class="previous_page">Previous page</span>
-                    <span class="next_page">Next page</span>
-                </div>
             </div>
             <?php include("footer.php"); ?>
         </main>

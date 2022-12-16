@@ -144,7 +144,7 @@
             <?php include("header.php"); ?>
             <div class="navigator_container">
                 <div class="breadcrumb">
-                    <a href="./">Home</a> / <?php echo($_SESSION['searchTerm'])?>
+                    <a href="./">Home</a> / <?php echo($_SESSION['searchTerm']);?>
                 </div>
                 <div class="flex-container">
                     <div class="flex-item results case">

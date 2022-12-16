@@ -206,7 +206,8 @@
         <?php include("header.php"); ?>
         
         <div class="breadcrumb">
-            <a href="./">Home</a> / <a href="<?php echo($_SERVER['HTTP_REFERER'])?>"><?php echo(getParameter($_SERVER['HTTP_REFERER'], "searchTerm")); ?></a> / <?php echo($_SESSION['Partname'])?>
+            <!-- a href="./">Home</a> / <a href="<?php echo($_SERVER['HTTP_REFERER'])?>"><?php echo(getParameter($_SERVER['HTTP_REFERER'], "searchTerm")); ?></a> / <?php echo($_SESSION['Partname'])?> -->
+            <a href="./">Home</a> / <a href="./searchResult.php?searchTerm=<?php echo($_SESSION['searchTerm'])?>"><?php echo($_SESSION['searchTerm']) ?></a> / <?php echo($_SESSION['Partname'])?>
         </div>
 
         <div class="item_flex_container">

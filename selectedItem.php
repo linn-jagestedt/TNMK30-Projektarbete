@@ -112,7 +112,7 @@
         $image_link = getLinkByColorID($images, $colorID);
 
         echo("<div class='big_image_2'>\n");
-            echo("<img id='preview_image' src='" . $image_link . "'> \n");
+            echo("<img id='preview_image' src='" . $image_link . "' alt='lego-part'> \n");
         echo("</div>\n");
 
         echo("<div class='brick_text'>\n");
@@ -164,7 +164,7 @@
         foreach ($images as $image) {
             $image_id = "color_" . $image['colorID'];
 
-            echo("<a href='selectedItem.php?PartID=" . $partID . "&ColorID=" . $image['colorID'] . "' onmouseleave=\"updatePreviewImage('color_" . $colorID . "')\"" . "onmouseover=\"updatePreviewImage('" . $image_id . "')\"" . ">");
+            echo("<a href='selectedItem.php?PartID=" . $partID . "&ColorID=" . $image['colorID'] . "' onmouseleave=\"updatePreviewImage('color_" . $colorID . "')\"" . " onmouseover=\"updatePreviewImage('" . $image_id . "')\"" . ">");
                 echo("<img class='single_colour' id=\"". $image_id . "\" src='" . $image['link'] .  "' alt='lego-part'>\n");
             echo("</a>");   
         }

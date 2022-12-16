@@ -12,6 +12,7 @@
     flex-wrap: nowrap;
     background-color: white;
     justify-content: center;
+    min-height: calc(100vh - 250px);
 }
 
 .flex-item {

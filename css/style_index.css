@@ -39,7 +39,7 @@
 .bakgrund {
     height: 100vh;
     width: 100vw;
-    background-image: url("../images/lego2.png");
+    background-image: url("../images/lego2.webp");
     z-index: -1;
     position: absolute;
     background-repeat: no-repeat;
@@ -86,7 +86,7 @@
     }
 
     .bakgrund{
-        background-image: url("../images/lego2-vertical.png");
+        background-image: url("../images/lego2-vertical.webp");
     }
     
 }

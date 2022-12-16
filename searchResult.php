@@ -103,7 +103,6 @@
         $startIndex = getStartIndex($totalItems, $page, $itemsPerPage);
 
         // Hämta alla bitar vars namn matchar $input
-        //$part_query = "SELECT * FROM parts WHERE Partname LIKE '%" . $searchTerm . "%' ORDER BY LENGTH(Partname), Partname ASC LIMIT " . $startIndex . ", " . $itemsPerPage;
         $part_query = "SELECT * FROM parts WHERE Partname LIKE '%" . $searchTerm . "%' OR PartID LIKE '%" . $searchTerm . "%' ORDER BY LENGTH(Partname), Partname ASC LIMIT " . $startIndex . ", " . $itemsPerPage;
         $part_result = mysqli_query($connection, $part_query);
 

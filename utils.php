@@ -133,6 +133,6 @@
         }
 
         // Ingen bild
-        return "./images/no_image.png";
+        return "./images/no_image.webp";
     }
 ?>

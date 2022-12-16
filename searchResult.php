@@ -33,7 +33,7 @@
 
                 echo("<a id=\"" . $partID . "_link\"> \n");
 
-                    echo("<img id=\"" . $partID . "_preview_image\" class='big_image' alt='lego-part'>\n");
+                    echo("<img id=\"" . $partID . "_preview_image\" class='big_image' alt='lego-part' src='./images/no_image.png'>\n");
 
                 echo("</a> \n");
 

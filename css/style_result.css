@@ -2,6 +2,11 @@
 * Search Result
 */
 
+.results_main {
+    min-height: 110vh;
+    margin-bottom: -5vh;
+}
+
 .flex-container {
     display: flex;
     flex-wrap: nowrap;
@@ -44,8 +49,8 @@
     flex-direction: row;
     justify-content: flex-start;
     flex-wrap: wrap;
-    max-width: 1500px;
-    margin-left: 100px;
+    max-width: 1500px; 
+    width: 1200px;
 }
 
 .item {

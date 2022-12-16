@@ -19,7 +19,7 @@
             echo("</div>\n");
 
             if (count($images) > 3) {
-                echo("<a class='scroll-button'" . "onclick=\"rotate('" . $partID . "', false)\"" . "> &#9654; </a>\n");
+                echo("<a class='scroll-button'" . " onclick=\"rotate('" . $partID . "', false)\"" . "> &#9654; </a>\n");
             }
 
         echo("</div>\n");
@@ -33,7 +33,7 @@
 
                 echo("<a id=\"" . $partID . "_link\"> \n");
 
-                    echo("<img id=\"" . $partID . "_preview_image\" class='big_image' alt='lego-part'> \n");
+                    echo("<img id=\"" . $partID . "_preview_image\" class='big_image' alt='lego-part'>\n");
 
                 echo("</a> \n");
 
@@ -128,11 +128,10 @@
 ?>
 
 <!DOCTYPE html>
-
-<html lang='sv'>   
+<html lang='en'>   
     <head>
         <title>Legobase</title>
-        <meta charset="utf-8">
+        <meta charset="UTF-8">
         <link href="./css/style.css" media="screen" rel="stylesheet" type="text/css">
         <link href="./css/style_result.css" media="screen" rel="stylesheet" type="text/css">
         <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>

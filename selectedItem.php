@@ -191,10 +191,10 @@
 ?>
 
 <!DOCTYPE html>
-<html>   
+<html lang='en'>   
     <head>
         <title>Legobase</title>
-        <meta charset="utf-8">
+        <meta charset="UTF-8">
         <link href="./css/style.css" media="screen" rel="stylesheet" type="text/css">
         <link href="./css/style_item.css" media="screen" rel="stylesheet" type="text/css">
         <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>

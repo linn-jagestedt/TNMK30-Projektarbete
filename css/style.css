@@ -34,7 +34,7 @@ body {
 
 .breadcrumb {
     font-size: 20px;
-    margin: 10px;
+    margin: 30px;
     color: grey;
 }
 .breadcrumb a:hover {
@@ -66,7 +66,7 @@ body {
 
     .breadcrumb {
         font-size: 3vw;
-        margin: 1vw;
+        margin: 3vw;
     }
 }
 

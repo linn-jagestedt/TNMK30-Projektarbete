@@ -57,36 +57,38 @@
         $itemsPerPage = SanitizeInput($connection, $_SESSION['itemsPerPage']);
 
         $totalItems = getTotalSets($connection, $partID, $colorID);
-
-        renderPageNav("selectedItem.php?PartID=" . $partID . "&ColorID=" . $colorID . "&itemsPerPage=" . $itemsPerPage, $page, $totalItems, $itemsPerPage);
+        
         $startIndex = getStartIndex($totalItems, $page, $itemsPerPage);
-
+        
         // Hämta sets vars itemID matchar input_partID och colorID matchar input_colorID;
         $inventoryQuery = "SELECT SetID, Quantity FROM inventory WHERE ItemID = '" . $partID . "' AND ColorID = '" . $colorID . "' ORDER BY Quantity DESC LIMIT " . $startIndex . ", " . $itemsPerPage;
         $inventoryResult = mysqli_query($connection, $inventoryQuery);
-
-        renderSets($connection, $inventoryResult);
-
-        renderPageNav("selectedItem.php?PartID=" . $partID . "&ColorID=" . $colorID . "&itemsPerPage=" . $itemsPerPage, $page, $totalItems, $itemsPerPage);
+       
+        if ($inventoryResult->num_rows) 
+        {
+            renderPageNav("selectedItem.php?PartID=" . $partID . "&ColorID=" . $colorID . "&itemsPerPage=" . $itemsPerPage, $page, $totalItems, $itemsPerPage);
+            renderSets($connection, $inventoryResult);
+            renderPageNav("selectedItem.php?PartID=" . $partID . "&ColorID=" . $colorID . "&itemsPerPage=" . $itemsPerPage, $page, $totalItems, $itemsPerPage);
+        }
     }
 
     function renderItem($connection) 
     {
         if (isset($_SESSION['PartID'])) {
-            $partID = SanitizeInput($connection, $_SESSION['PartID']);
+            $partID = $_SESSION['PartID'];
+            $partname = $_SESSION['Partname'];
         } else {
             echo("<p>No PartID given</p>");
             return;
         }
 
         if (isset($_SESSION['ColorID'])) {
-            $colorID = SanitizeInput($connection, $_SESSION['ColorID']);
+            $colorID = $_SESSION['ColorID'];
         } else {
             echo("<p>No ColorID given</p>");
             return;
         }
 
-        $partname = getPartname($connection, $partID);
         $itemtypeID = getItemTypeID($connection, $partID);
         $colorname = getColor($connection, $colorID);
 
@@ -140,7 +142,6 @@
 
         while (($lastPos = strpos($html_text, "<p>", $lastPos)) !== false) 
         {   
-
             $text = substr($html_text, $lastPos);            
             $text = substr($text, 0, strpos($text, "</p>"));
             $lastPos = $lastPos + strlen("<p>");
@@ -150,9 +151,8 @@
                 $text = preg_replace("/<a\s(.+?)>(.+?)<\/a>/is", "$2", $text);
                 // ta bort super-text
                 $text = preg_replace("/<sup\s(.+?)>(.+?)<\/sup>/is", "", $text);
-                return $text;
+                return str_replace("<p>", "", $text);
             }
-
         }
 
         return "No description found";
@@ -174,14 +174,18 @@
 
     if ($_SERVER['REQUEST_METHOD'] === 'GET') 
     {
-        if (isset($_GET['PartID'])) { $_SESSION['PartID'] = $_GET['PartID']; }
+        if (isset($_GET['PartID'])) 
+        { 
+            $_SESSION['PartID'] = SanitizeInput($connection, $_GET['PartID']);
+            $_SESSION['Partname'] = getPartname($connection, $_SESSION['PartID']);
+         }
         
-        if (isset($_GET['ColorID'])) { $_SESSION['ColorID'] = $_GET['ColorID']; }
+        if (isset($_GET['ColorID'])) { $_SESSION['ColorID'] = SanitizeInput($connection,  $_GET['ColorID']); }
         
-        if (isset($_GET['page'])) { $_SESSION['page'] = $_GET['page']; } 
+        if (isset($_GET['page'])) { $_SESSION['page'] = SanitizeInput($connection, $_GET['page']); } 
         else { $_SESSION['page'] = 1; }
        
-        if (isset($_GET['itemsPerPage'])) { $_SESSION['itemsPerPage'] = $_GET['itemsPerPage']; } 
+        if (isset($_GET['itemsPerPage'])) { $_SESSION['itemsPerPage'] = SanitizeInput($connection, $_GET['itemsPerPage']); } 
         else { $_SESSION['itemsPerPage'] = 10; }
     }
 ?>
@@ -200,6 +204,10 @@
 
     <body>
         <?php include("header.php"); ?>
+        
+        <div class="breadcrumb">
+            <a href="./">Home</a> / <a href="<?php echo($_SERVER['HTTP_REFERER'])?>"><?php echo(getParameter($_SERVER['HTTP_REFERER'], "searchTerm")); ?></a> / <?php echo($_SESSION['Partname'])?>
+        </div>
 
         <div class="item_flex_container">
             <?php renderItem($connection); ?>

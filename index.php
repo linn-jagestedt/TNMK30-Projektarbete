@@ -7,8 +7,8 @@
         <link href="./css/style.css" media="screen" rel="stylesheet" type="text/css">
         <link href="./css/style_index.css" media="screen" rel="stylesheet" type="text/css">
         <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
-        <link rel="preload" href="./images/lego2.png" as="image" type="image/png">
-        <link rel="preload" href="./images/lego2-vertical.png" as="image" type="image/png">
+        <link rel="preload" href="./images/lego2.webp" as="image" type="image/png">
+        <link rel="preload" href="./images/lego2-vertical.webp" as="image" type="image/png">
     </head>
 
     <body>

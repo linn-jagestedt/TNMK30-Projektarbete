@@ -7,8 +7,8 @@
         <link href="./css/style.css" media="screen" rel="stylesheet" type="text/css">
         <link href="./css/style_index.css" media="screen" rel="stylesheet" type="text/css">
         <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
-        <link rel="preload" href="./images/lego2.png" as="image" type="image/png"/>
-        <link rel="preload" href="./images/lego2-vertical.png" as="image" type="image/png"/>
+        <link rel="preload" href="./images/lego2.png" as="image" type="image/png">
+        <link rel="preload" href="./images/lego2-vertical.png" as="image" type="image/png">
     </head>
 
     <body>
@@ -19,7 +19,7 @@
             <div><h1 class='titel'>Legobase</h1></div>
             <div class='sokfalt'>
                 <form action="searchResult.php" method="get">
-                    <label class='sok-text'><p>Search</p></label>
+                    <label class='sok-text'>Search</label>
                     <input type="text" name="searchTerm" class='sok' placeholder=" Find a brick...">
                 </form>
             </div>

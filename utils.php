@@ -16,14 +16,14 @@
         echo("<div class='page-nav'>");
 
             if ($page > 1) {
-                echo("<a class='scroll-button' href='" . $url . "&page=" . (int)($page - 1)  . "'>&#9664</a>");
+                echo("<a class='scroll-button' href='" . $url . "&page=" . (int)($page - 1)  . "'>&#9664;</a>");
             }
 
             echo("<span> page " . $page . " of " . ceil($totalItems / $itemsPerPage) . "</span>");
 
             if ($page < ceil($totalItems / $itemsPerPage)) {
                 if ((int)($page * $itemsPerPage) != $totalItems) {
-                    echo("<a class='scroll-button' href='" . $url . "&page=" . (int)($page + 1)  . "'>&#9654</a>");
+                    echo("<a class='scroll-button' href='" . $url . "&page=" . (int)($page + 1)  . "'>&#9654;</a>");
                 } 
             }
 

@@ -93,7 +93,7 @@
     display: flex;
     flex-grow: 1;
 }
-.brick_title p {
+.brick_title {
     color: #252525;
     font-size: 30px;
     margin: 20px;

@@ -6,20 +6,20 @@
         echo("<div class='scroll'> \n");
 
             if (count($images) > 3) {
-                echo("<a class='scroll-button' " . "onclick=\"rotate('" . $partID . "', true)\"" . "> &#9664 </a>\n");
+                echo("<a class='scroll-button' " . "onclick=\"rotate('" . $partID . "', true)\"" . "> &#9664; </a>\n");
             }
 
             echo("<div class='colour-image'>\n");
 
                 foreach ($images as $image) {
                     $image_id = $partID . "_color_" . $image['colorID'];
-                    echo("<img id=\"". $image_id . "\" src='" . $image['link'] .  "' " . "onclick=\"updatePreviewImage('" . $partID ."', '" . $image_id . "')\"" . "alt='lego-part'>\n");
+                    echo("<img id=\"". $image_id . "\" src='" . $image['link'] .  "' " . "onclick=\"updatePreviewImage('" . $partID ."', '" . $image_id . "')\"" . " alt='lego-part'>\n");
                 }
 
             echo("</div>\n");
 
             if (count($images) > 3) {
-                echo("<a class='scroll-button'" . "onclick=\"rotate('" . $partID . "', false)\"" . "> &#9654 </a>\n");
+                echo("<a class='scroll-button'" . "onclick=\"rotate('" . $partID . "', false)\"" . "> &#9654; </a>\n");
             }
 
         echo("</div>\n");
@@ -33,17 +33,13 @@
 
                 echo("<a id=\"" . $partID . "_link\"> \n");
 
-                    echo("<img id=\"" . $partID . "_preview_image\" class='big_image'> \n");
+                    echo("<img id=\"" . $partID . "_preview_image\" class='big_image' alt='lego-part'> \n");
 
                 echo("</a> \n");
 
             echo("</div>\n");
 
-            echo("<span class='brick_title'>\n");
-
-                echo("<p>" . $partName . "</p>\n");
-                    
-            echo("</span>\n");
+            echo("<span class='brick_title'>$partName</span>\n");
 
             renderImage($partID, $images);
         

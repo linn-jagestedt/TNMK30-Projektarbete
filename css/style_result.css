@@ -123,11 +123,8 @@
 
 .page-nav {
     justify-content: center;
+}
 
-}
-.page-nav span {
-    font-size: 30px;
-}
 
 @media (max-width: 900px) or (orientation: portrait) {
     .flex-item {

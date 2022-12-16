@@ -2,6 +2,7 @@
     include_once("databaseConnection.php");
     include_once("utils.php");
 
+    // Render the images for the given part. If there are more than 3 images, add button for the scrolll functionality
     function renderImage(string $partID, array $images) {
         echo("<div class='scroll'> \n");
 
@@ -50,31 +51,28 @@
     {
         echo("<div class='items'>");
 
-        // Plocka varje data-rad från $part_results
+        // Fetch every row from the msqli_result
         while ($part_row = mysqli_fetch_array($part_result))
         {
-            // Hämta ItemtypeID från repektive PartID från 'inventory'-tabellen
             $partID = $part_row['PartID'];
             $partName = $part_row['Partname'];
 
             $itemtypeID = getItemTypeID($connection, $partID);
 
-            // Sök i inventory efter alla bitar med samma ItemID och distinkta färger
+            // Search the inventory tabel after all the parts whit the sama ItemID an distinct colors.
             $colors_query = "SELECT DISTINCT ColorID FROM inventory WHERE ItemID = '" . $partID . "' ORDER BY ColorID ASC";
             $colors_result = mysqli_query($connection, $colors_query);
             
             $images = array();
             
+            // Get all links to the images of the part in alla available colors.
             if ($colors_result->num_rows > 0) 
-            {
+            {   
                 while ($colorID = mysqli_fetch_array($colors_result)) {
                     array_push($images, [ 'colorID' => $colorID['ColorID'], 'link' => getImage($connection, $colorID['ColorID'], $partID, $itemtypeID) ]);
                 }
-            }
-             else 
-            {  
-                array_push($images,  [ 'colorID' => '', 'link' => getImage($connection, '%', $partID, '%') ]);
             } 
+            else { array_push($images,  [ 'colorID' => '', 'link' => getImage($connection, '%', $partID, '%') ]); } 
 
             renderItem($partName, $partID, $images);
         }
@@ -84,26 +82,29 @@
 
     function renderPageContent($connection) 
     {
+        // Reqire searchTerm to be set
         if (isset($_SESSION['searchTerm'])) {
-            $searchTerm = SanitizeInput($connection, $_SESSION['searchTerm']);
+            $searchTerm = $_SESSION['searchTerm'];
         } else {
             echo("<p>No SearchTerm given</p>");
             return;
         }
 
+        // Require a searchTerm that is atleast 3 characters long
         if (strlen($searchTerm) < 3) {
             echo("<p>No SearchTerm given</p>");
             return;
         }
 
+        // Isset is not need because these variables are set to default values
         $page = $_SESSION['page'];
         $itemsPerPage = $_SESSION['itemsPerPage'];
 
         $totalItems = getTotalParts($connection, $searchTerm);
         $startIndex = getStartIndex($totalItems, $page, $itemsPerPage);
 
-        // Hämta alla bitar vars namn matchar $input
-        $part_query = "SELECT * FROM parts WHERE Partname LIKE '%" . $searchTerm . "%' OR PartID LIKE '%" . $searchTerm . "%' ORDER BY LENGTH(Partname), Partname ASC LIMIT " . $startIndex . ", " . $itemsPerPage;
+        // Select all parts where the the partname or partid matches the searchTerm
+        $part_query = "SELECT * FROM parts WHERE Partname LIKE '%" . $searchTerm . "%' OR PartID = '" . $searchTerm . "' ORDER BY LENGTH(Partname), Partname ASC LIMIT " . $startIndex . ", " . $itemsPerPage;
         $part_result = mysqli_query($connection, $part_query);
 
         if ($part_result->num_rows) 

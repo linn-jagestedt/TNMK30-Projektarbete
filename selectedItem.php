@@ -26,6 +26,7 @@
             $quantity = $inventory_row['Quantity'];            
             $setID = $inventory_row['SetID'];
 
+            // Get set info from the sets table
             $set_query = "SELECT * FROM sets WHERE SetID = '" . $setID . "'";
             $set_result = mysqli_query($connection, $set_query);
             $set_row = mysqli_fetch_array($set_result);
@@ -41,26 +42,21 @@
 
     function renderSetSection($connection) 
     {
-        if (isset($_SESSION['PartID'])) {
-            $partID = SanitizeInput($connection, $_SESSION['PartID']);
+        if (isset($_SESSION['PartID']) && isset($_SESSION['ColorID'])) {
+            $partID = $_SESSION['PartID'];
+            $colorID = $_SESSION['ColorID'];
         } else {
             return;
         }
 
-        if (isset($_SESSION['ColorID'])) {
-            $colorID = SanitizeInput($connection, $_SESSION['ColorID']);
-        } else {
-            return;
-        }
-
-        $page = SanitizeInput($connection, $_SESSION['page']);
-        $itemsPerPage = SanitizeInput($connection, $_SESSION['itemsPerPage']);
+        // Isset is not need because these variables are set to default values
+        $page = $_SESSION['page'];
+        $itemsPerPage = $_SESSION['itemsPerPage'];
 
         $totalItems = getTotalSets($connection, $partID, $colorID);
-        
         $startIndex = getStartIndex($totalItems, $page, $itemsPerPage);
         
-        // Hämta sets vars itemID matchar input_partID och colorID matchar input_colorID;
+        // Select all Sets with matching partID and colorID 
         $inventoryQuery = "SELECT SetID, Quantity FROM inventory WHERE ItemID = '" . $partID . "' AND ColorID = '" . $colorID . "' ORDER BY Quantity DESC LIMIT " . $startIndex . ", " . $itemsPerPage;
         $inventoryResult = mysqli_query($connection, $inventoryQuery);
        
@@ -74,29 +70,25 @@
 
     function renderItem($connection) 
     {
-        if (isset($_SESSION['PartID'])) {
+        if (isset($_SESSION['PartID']) && isset($_SESSION['ColorID'])) {
             $partID = $_SESSION['PartID'];
             $partname = $_SESSION['Partname'];
-        } else {
-            echo("<p>No PartID given</p>");
-            return;
-        }
-
-        if (isset($_SESSION['ColorID'])) {
             $colorID = $_SESSION['ColorID'];
         } else {
-            echo("<p>No ColorID given</p>");
+            echo("<p>Part not found</p>");
             return;
         }
 
         $itemtypeID = getItemTypeID($connection, $partID);
         $colorname = getColor($connection, $colorID);
 
+        // Get all the distinct colors for the given part
         $colors_query = "SELECT DISTINCT ColorID FROM inventory WHERE ItemID = '" . $partID . "' ORDER BY ColorID ASC";
         $colors_result = mysqli_query($connection, $colors_query);
         
         $images = array();
         
+        // Get all links to the images of the part in alla available colors.
         if ($colors_result->num_rows > 0) 
         {
             while ($colorID_row = mysqli_fetch_array($colors_result)) {
@@ -105,10 +97,9 @@
             }
         }
         else 
-        {  
-            array_push($images,  [ 'colorID' => '', 'link' => getImage($connection, '%', $partID, '%') ]);
-        } 
+        { array_push($images,  [ 'colorID' => '', 'link' => getImage($connection, '%', $partID, '%') ]); } 
 
+        // Set the large image link to the image with the given colorID
         $image_link = getLinkByColorID($images, $colorID);
 
         echo("<div class='big_image_2'>\n");
@@ -137,15 +128,18 @@
 
     function renderDescription(string $partID)
     {
+        // Read the html of the website as text
         $html_text = file_get_contents('https://brickipedia.fandom.com/wiki/Part_' . $partID);
         $lastPos = 0;
 
+        // Loop through all <p> tags in the string
         while (($lastPos = strpos($html_text, "<p>", $lastPos)) !== false) 
         {   
             $text = substr($html_text, $lastPos);            
             $text = substr($text, 0, strpos($text, "</p>"));
             $lastPos = $lastPos + strlen("<p>");
 
+            // If the <p> tag contains the word Part + partID, return it
             if (strpos($text, 'Part ' . $partID)) {
                 // Ta bort a-tag men spara innehåll
                 $text = preg_replace("/<a\s(.+?)>(.+?)<\/a>/is", "$2", $text);
@@ -178,7 +172,7 @@
         { 
             $_SESSION['PartID'] = SanitizeInput($connection, $_GET['PartID']);
             $_SESSION['Partname'] = getPartname($connection, $_SESSION['PartID']);
-         }
+        }
         
         if (isset($_GET['ColorID'])) { $_SESSION['ColorID'] = SanitizeInput($connection,  $_GET['ColorID']); }
         

@@ -1,5 +1,6 @@
 <?php
 
+    // Get the index of the first element to be retrieved from the database for a given page
     function getStartIndex(int $total, int $page, int $itemsPerPage) 
     {
         $startIndex = ($page - 1) * $itemsPerPage;
@@ -12,8 +13,14 @@
         return $startIndex;
     }
 
+    // Render the page buttons as a-tags with links to the same page with a different query
     function renderPageNav(string $url, int $page, int $totalItems, int $itemsPerPage) 
     {
+        // If there is only one page, don't render the pagenav
+        if (ceil($totalItems / $itemsPerPage) < 2) {
+            return;
+        }
+
         echo("<div class='page-nav'>");
 
             if ($page > 1) {
@@ -91,6 +98,8 @@
         return $totalItems_row['total'];
     }
 
+    // Query the database for what kind of pictures are avalible for an item, and return the link for the image.
+    // If no image-link is found the function returns a link to a placeholder image.
     function getImage($connection, string $colorID, string $itemID, string $itemtypeID) {
         $new_result = mysqli_query($connection, "SELECT * FROM images WHERE ItemTypeID = '" . $itemtypeID . "' AND ItemID = '" . $itemID . "' AND ColorID = '" . $colorID . "'");
         $image_row = mysqli_fetch_array($new_result);
@@ -124,11 +133,5 @@
 
         // Ingen bild
         return "./images/no_image.png";
-    }
-
-    function getParameter(string $url, string $param) {
-        $parts = parse_url($url);
-        parse_str($parts['query'], $query);
-        return $query[$param];
     }
 ?>

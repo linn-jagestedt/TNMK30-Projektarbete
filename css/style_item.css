@@ -96,3 +96,13 @@
 .set_text p {
     font-size: 1vw;
 }
+
+.scroll-button {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: #D9D9D9;
+}

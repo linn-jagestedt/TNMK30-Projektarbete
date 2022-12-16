@@ -11,7 +11,7 @@
     display: flex;
     flex-wrap: nowrap;
     background-color: white;
-    max-width: 2000px;
+    max-width: 1700px;
 }
 
 .flex-container .flex-item {
@@ -19,6 +19,8 @@
     text-align: center;
     font-size: 35px;
     align-items: center;
+    display: flex;
+    flex-direction: column;
 }
 
 .filter {
@@ -50,7 +52,7 @@
     justify-content: flex-start;
     flex-wrap: wrap;
     max-width: 1500px; 
-    width: 1200px;
+    width: 1020px;
 }
 
 .item {
@@ -137,4 +139,11 @@
 .colour-image img:hover {
     opacity: 0.7;
     cursor: pointer;
+}
+
+.page-nav {
+    justify-content: center;
+}
+.page-nav span {
+    font-size: 30px;
 }

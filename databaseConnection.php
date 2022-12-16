@@ -13,6 +13,13 @@
     function SanitizeInput($connection, string $input) 
     {
         $input = mysqli_real_escape_string($connection, $input);
+        $input = str_replace("%", "", $input);
+        $input = str_replace("*", "", $input);
+        $input = str_replace("$", "", $input);
+        $input = str_replace(",", "", $input);
+        $input = str_replace(".", "", $input);
+        $input = str_replace(":", "", $input);
+        $input = str_replace(";", "", $input);
         return trim($input);
     }
 ?>

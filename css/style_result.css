@@ -20,9 +20,6 @@
     align-items: center;
     display: flex;
     flex-direction: column;
-    display: flex;
-    flex-wrap: nowrap;
-    background-color: white;
 }
 
 .filter {

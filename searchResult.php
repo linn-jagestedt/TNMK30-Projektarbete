@@ -95,13 +95,13 @@
             return;
         }
 
-        if (strlen($searchTerm) < 3) {
+        if ($searchTerm == "") {
             echo("<p>No SearchTerm given</p>");
             return;
         }
 
-        $page = $_SESSION['page'];
-        $itemsPerPage = $_SESSION['itemsPerPage'];
+        $page = SanitizeInput($connection, $_SESSION['page']);
+        $itemsPerPage = SanitizeInput($connection, $_SESSION['itemsPerPage']);
 
         $totalItems = getTotalParts($connection, $searchTerm);
         $startIndex = getStartIndex($totalItems, $page, $itemsPerPage);
@@ -110,22 +110,19 @@
         $part_query = "SELECT * FROM parts WHERE Partname LIKE '%" . $searchTerm . "%' ORDER BY LENGTH(Partname), Partname ASC LIMIT " . $startIndex . ", " . $itemsPerPage;
         $part_result = mysqli_query($connection, $part_query);
 
-        if ($part_result->num_rows) 
-        {
-            renderPageNav("searchResult.php?searchTerm=" . $searchTerm . "&itemsPerPage=" . $itemsPerPage, $page, $totalItems, $itemsPerPage);
-            renderItems($connection, $part_result);
-            renderPageNav("searchResult.php?searchTerm=" . $searchTerm . "&itemsPerPage=" . $itemsPerPage, $page, $totalItems, $itemsPerPage);
-        }
+        renderPageNav("searchResult.php?searchTerm=" . $searchTerm . "&itemsPerPage=" . $itemsPerPage, $page, $totalItems, $itemsPerPage);
+        renderItems($connection, $part_result);
+        renderPageNav("searchResult.php?searchTerm=" . $searchTerm . "&itemsPerPage=" . $itemsPerPage, $page, $totalItems, $itemsPerPage);
     }
 
     if ($_SERVER['REQUEST_METHOD'] === 'GET') 
     {
-        if (isset($_GET['searchTerm'])) { $_SESSION['searchTerm'] = SanitizeInput($connection, $_GET['searchTerm']); }
+        if (isset($_GET['searchTerm'])) { $_SESSION['searchTerm'] = $_GET['searchTerm']; }
 
-        if (isset($_GET['page'])) { $_SESSION['page'] = SanitizeInput($connection, $_GET['page']); } 
+        if (isset($_GET['page'])) { $_SESSION['page'] = $_GET['page']; } 
         else { $_SESSION['page'] = 1; }
        
-        if (isset($_GET['itemsPerPage'])) { $_SESSION['itemsPerPage'] = SanitizeInput($connection, $_GET['itemsPerPage']); } 
+        if (isset($_GET['itemsPerPage'])) { $_SESSION['itemsPerPage'] = $_GET['itemsPerPage']; } 
         else { $_SESSION['itemsPerPage'] = 50; }
     }
 ?>
@@ -147,9 +144,6 @@
         <main class="result_main">
             <?php include("header.php"); ?>
             <div class="navigator_container">
-                <div class="breadcrumb">
-                    <a href="./">Home</a> / <?php echo($_SESSION['searchTerm'])?>
-                </div>
                 <div class="flex-container">
                     <div class="flex-item filter">
                         <div class="restrainer">

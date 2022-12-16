@@ -128,6 +128,7 @@
             } else {
                 return "./images/no_img.jpg";
             }
+            //return "https://img.bricklink.com/" . $img_path . "/" . $itemID . "." . $img_filetype;
             return "https://weber.itn.liu.se/~stegu/img.bricklink.com/" . $img_path . "/" . $itemID . "." . $img_filetype;
         }
 

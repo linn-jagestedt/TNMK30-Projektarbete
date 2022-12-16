@@ -3,7 +3,7 @@
  */
 
 .index_main{
-    height: 65vh;
+    height: 62vh;
 }
 
 .titel {
@@ -37,7 +37,7 @@
 }
 
 .bakgrund {
-    height: 100vh;
+    height: 92vh;
     width: 100vw;
     background-image: url("../images/lego2.webp");
     z-index: -1;
@@ -57,6 +57,10 @@
 }
 
 @media (max-width: 900px) or (orientation: portrait) {
+
+    .bakgrund  {
+        height: 100vh;
+    }
 
     .index_main {
         height: 60vh;

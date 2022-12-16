@@ -86,13 +86,13 @@
         if (isset($_SESSION['searchTerm'])) {
             $searchTerm = $_SESSION['searchTerm'];
         } else {
-            echo("<p>No SearchTerm given</p>");
+            echo("<p>No search term given</p>");
             return;
         }
 
         // Require a searchTerm that is atleast 3 characters long
         if (strlen($searchTerm) < 3) {
-            echo("<p>No SearchTerm given</p>");
+            echo("<p>Search term too short</p>");
             return;
         }
 
@@ -112,6 +112,8 @@
             renderPageNav("searchResult.php?searchTerm=" . $searchTerm . "&itemsPerPage=" . $itemsPerPage, $page, $totalItems, $itemsPerPage);
             renderItems($connection, $part_result);
             renderPageNav("searchResult.php?searchTerm=" . $searchTerm . "&itemsPerPage=" . $itemsPerPage, $page, $totalItems, $itemsPerPage);
+        } else {
+            echo("<p>No parts found</p>");
         }
     }
 

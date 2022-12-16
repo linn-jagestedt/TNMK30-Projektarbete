@@ -152,22 +152,6 @@
                     <a href="./">Home</a> / <?php echo($_SESSION['searchTerm'])?>
                 </div>
                 <div class="flex-container">
-                    <div class="flex-item filter">
-                        <div class="restrainer">
-                            <titel>Filter</titel>
-                            <form action="/action_page.php">
-                                <label for="färg">Colour:</label>
-                                <select id="färg" name="färg">
-                                    <option value="röd" selected>red</option>
-                                    <option value="blå">blue</option>
-                                    <option value="gul">yellow</option>
-                                    <option value="grön">green</option>
-                                </select>
-                                <input type="submit">
-                            </form>
-                        </div>
-                    </div>
-
                     <div class="flex-item results case">
                         <?php renderPageContent($connection); ?>
                     </div>

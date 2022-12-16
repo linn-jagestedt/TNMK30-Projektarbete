@@ -11,16 +11,18 @@
     display: flex;
     flex-wrap: nowrap;
     background-color: white;
-    max-width: 1700px;
 }
 
-.flex-container .flex-item {
+.flex-item {
     margin: 50px;
     text-align: center;
     font-size: 35px;
     align-items: center;
     display: flex;
     flex-direction: column;
+    display: flex;
+    flex-wrap: nowrap;
+    background-color: white;
 }
 
 .filter {

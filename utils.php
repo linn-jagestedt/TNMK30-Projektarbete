@@ -1,4 +1,5 @@
-<?php 
+<?php
+
     function getStartIndex(int $total, int $page, int $itemsPerPage) 
     {
         $startIndex = ($page - 1) * $itemsPerPage;
